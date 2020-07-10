@@ -35,9 +35,9 @@
             // 
             // FaceBox
             // 
-            this.FaceBox.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.FaceBox.BackColor = System.Drawing.SystemColors.ControlDark;
             this.FaceBox.InitialImage = ((System.Drawing.Image)(resources.GetObject("FaceBox.InitialImage")));
-            this.FaceBox.Location = new System.Drawing.Point(11, 11);
+            this.FaceBox.Location = new System.Drawing.Point(11, 57);
             this.FaceBox.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.FaceBox.Name = "FaceBox";
             this.FaceBox.Size = new System.Drawing.Size(366, 415);
@@ -49,11 +49,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(679, 652);
+            this.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.ClientSize = new System.Drawing.Size(679, 483);
             this.Controls.Add(this.FaceBox);
+            this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "MainForm";
-            this.Text = "Form1";
+            this.Text = "Face Controller";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.FaceBox)).EndInit();
             this.ResumeLayout(false);

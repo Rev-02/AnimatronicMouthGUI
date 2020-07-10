@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -26,7 +27,7 @@ namespace AnimatronicMouthGUI
 
         private void FaceBox_Click(object sender, EventArgs e)
         {
-            VirtualFace.writeFace(127);
+            
         }
 
 

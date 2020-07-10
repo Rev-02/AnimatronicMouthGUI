@@ -40,14 +40,12 @@ namespace AnimatronicMouthGUI
             FaceBox.Paint += new System.Windows.Forms.PaintEventHandler(drawPercentRect);
             Image blankimage = Image.FromFile("bitmap.png");
             FaceBox.Image = blankimage;
-            Console.WriteLine(blankimage.Height);
-            Console.WriteLine(blankimage.Width);
-            Console.WriteLine(faceBox.Width);
         }
 
         public void writeFace(int pos)
         {
-            Pos = (pos / 127) * (FaceBox.Height - limit - lowerPad);
+            float percent = (float)pos/(127);
+            Pos = Convert.ToInt32(percent * (FaceBox.Height - limit - lowerPad));
             FaceBox.Refresh();            
 
         }
