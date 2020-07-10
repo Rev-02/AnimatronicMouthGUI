@@ -26,7 +26,7 @@ namespace AnimatronicMouthGUI
 
         private void FaceBox_Click(object sender, EventArgs e)
         {
-            VirtualFace.drawPercentRect();
+            VirtualFace.writeFace(127);
         }
 
 
