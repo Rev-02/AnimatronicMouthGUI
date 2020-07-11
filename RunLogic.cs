@@ -15,8 +15,9 @@ using System.Diagnostics;
 
 namespace AnimatronicMouthGUI
 {
-    class RunLogic
+    public class RunLogic
     {
+        private VirtualFaceController VirtualFace;
         private static Random random; 
         private static FaceController faceController;
         private static Mouth m;
@@ -24,7 +25,13 @@ namespace AnimatronicMouthGUI
         private static ReaderWriterLockSlim mouthlock = new ReaderWriterLockSlim();
         private static ReaderWriterLockSlim eyelock = new ReaderWriterLockSlim();
         private static int[][] Eyes = new int[2][];
-        private static string PortQueue = "0"; 
+        private static string PortQueue = "0";
+        
+        public RunLogic(VirtualFaceController vface)
+        {
+            VirtualFace = vface;
+        }
+
         static void Setup()
         {
             random = new Random();
@@ -34,7 +41,7 @@ namespace AnimatronicMouthGUI
 
             ThreadStart eyethread = new ThreadStart(processEyes);
             ThreadStart portwriter = new ThreadStart(writeData);
-            ThreadStart main = new ThreadStart(MainLoop);
+            //ThreadStart main = new ThreadStart(MainLoop);
             Eyes = eyeController.Eyes;
             m.MouthPosChanged += mouthEventHandler;
             eyeController.EyesChanged += writeEyevals;
@@ -43,11 +50,11 @@ namespace AnimatronicMouthGUI
             // start them  
             
             Thread writerThread = new Thread(portwriter);
-            Thread interfaceThread = new Thread(main);
+            //Thread interfaceThread = new Thread(main);
             Thread Eyethread = new Thread(eyethread);
             writerThread.Start();
             Thread.Sleep(3000);
-            interfaceThread.Start();
+            //interfaceThread.Start();
             Eyethread.Start();
             
         }

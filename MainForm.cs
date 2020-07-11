@@ -14,6 +14,7 @@ namespace AnimatronicMouthGUI
     public partial class MainForm : Form
     {
         public VirtualFaceController VirtualFace;
+        public RunLogic Run;
 
         public MainForm()
         {
@@ -23,6 +24,7 @@ namespace AnimatronicMouthGUI
         private void Form1_Load(object sender, EventArgs e)
         {
             VirtualFace = new VirtualFaceController(FaceBox);
+            Run = new RunLogic(VirtualFace);
         }
 
         private void FaceBox_Click(object sender, EventArgs e)
@@ -30,6 +32,24 @@ namespace AnimatronicMouthGUI
             
         }
 
+        private void UpdateButton_Click(object sender, EventArgs e)
+        {
 
+        }
+
+        private void NewsButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void WeatherButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void POSTButton_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
