@@ -11,6 +11,11 @@ namespace AnimatronicMouthGUI
     public class VirtualFaceController
     {
         Graphics g;
+        int[][] ColorArray = new int[][]
+        {
+            new int[] {0,0,0},
+            new int[] {0,0,0}
+        };
         private int pPos = 3; //backing field for Pos
         protected int Pos
         {
@@ -37,25 +42,49 @@ namespace AnimatronicMouthGUI
         public VirtualFaceController(PictureBox faceBox)
         {
             FaceBox = faceBox;
-            FaceBox.Paint += new System.Windows.Forms.PaintEventHandler(drawPercentRect);
+            FaceBox.Paint += new System.Windows.Forms.PaintEventHandler(drawFace);
             Image blankimage = Image.FromFile("bitmap.png");
             FaceBox.Image = blankimage;
         }
 
-        public void writeFace(int pos)
+        public void writeFace(string strpos, int[][] colorArray)
         {
+            int pos = Convert.ToInt32(strpos);
             float percent = (float)pos/(127);
             Pos = Convert.ToInt32(percent * (FaceBox.Height - limit - lowerPad));
+            for (int i = 0; i < 1; i++)
+            {
+                for (int a = 0; a < 2; a++)
+                {
+                    ColorArray[i][a] = colorArray[i][a];
+                }
+            }
             FaceBox.Refresh();            
 
         }
-        public void drawPercentRect(object sender, PaintEventArgs e)
+        private void drawFace(object sender, PaintEventArgs e)
         {
-            g = e.Graphics;
-            SolidBrush brush = new SolidBrush(Color.DarkGray);
-            Rectangle mouthArea = new Rectangle(5, limit,FaceBox.Width - 10, Pos);
-            g.FillRectangle(brush, mouthArea);
+            g = e.Graphics; //generate graphics area from picturebox
+            Color LeftColour = new Color(); //left eyecolour
+            Color RightColour = new Color(); //right eye colour
+            LeftColour = Color.FromArgb(map(ColorArray[0][0],0,128,0,255), map(ColorArray[0][1], 0, 128, 0, 255),
+                map(ColorArray[0][2], 0, 128, 0, 255)); //Copy colours from array and map to ARGB
+            RightColour = Color.FromArgb(map(ColorArray[1][0],0,128,0,255), map(ColorArray[1][1], 0, 128, 0, 255),
+                map(ColorArray[1][2], 0, 128, 0, 255)); //Copy colours from array and map to ARGB
+            SolidBrush Mouthbrush = new SolidBrush(Color.DarkGray); //Dark gray colour for mouth rectanlge
+            SolidBrush Leftbrush = new SolidBrush(LeftColour); //Left eye colour
+            SolidBrush Rightbrush = new SolidBrush(RightColour); // right eye colour
+            Rectangle mouthArea = new Rectangle(5, limit, FaceBox.Width - 10, Pos);
+            Rectangle LeftEye = new Rectangle(80, 120, 5, 5); //has coordiantes for eye position
+            Rectangle RightEye = new Rectangle(275, 120, 5, 5);
+            g.FillRectangle(Mouthbrush, mouthArea);
+            g.FillEllipse(Leftbrush, LeftEye);
+            g.FillEllipse(Rightbrush, RightEye);
         }
 
+        private int map(int variable,int inMin,int inMax,int outMin, int outMax)
+        {
+            return (variable - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+        }
     }
 }
