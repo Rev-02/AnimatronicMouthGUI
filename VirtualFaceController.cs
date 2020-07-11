@@ -52,9 +52,9 @@ namespace AnimatronicMouthGUI
             int pos = Convert.ToInt32(strpos);
             float percent = (float)pos/(127);
             Pos = Convert.ToInt32(percent * (FaceBox.Height - limit - lowerPad));
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < 2; i++)
             {
-                for (int a = 0; a < 2; a++)
+                for (int a = 0; a < 3; a++)
                 {
                     ColorArray[i][a] = colorArray[i][a];
                 }
@@ -75,8 +75,8 @@ namespace AnimatronicMouthGUI
             SolidBrush Leftbrush = new SolidBrush(LeftColour); //Left eye colour
             SolidBrush Rightbrush = new SolidBrush(RightColour); // right eye colour
             Rectangle mouthArea = new Rectangle(5, limit, FaceBox.Width - 10, Pos);
-            Rectangle LeftEye = new Rectangle(80, 120, 5, 5); //has coordiantes for eye position
-            Rectangle RightEye = new Rectangle(275, 120, 5, 5);
+            Rectangle LeftEye = new Rectangle(80, 120, 10, 10); //has coordiantes for eye position
+            Rectangle RightEye = new Rectangle(273,120, 10, 10);
             g.FillRectangle(Mouthbrush, mouthArea);
             g.FillEllipse(Leftbrush, LeftEye);
             g.FillEllipse(Rightbrush, RightEye);

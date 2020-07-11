@@ -34,7 +34,7 @@ namespace AnimatronicMouthGUI
 
         private void UpdateButton_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void NewsButton_Click(object sender, EventArgs e)
