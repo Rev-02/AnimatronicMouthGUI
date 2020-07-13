@@ -32,7 +32,7 @@
             this.FaceBox = new System.Windows.Forms.PictureBox();
             this.NewsButton = new System.Windows.Forms.Button();
             this.WeatherButton = new System.Windows.Forms.Button();
-            this.POSTButton = new System.Windows.Forms.Button();
+            this.ChangeColButton = new System.Windows.Forms.Button();
             this.UpdateButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.FaceBox)).BeginInit();
             this.SuspendLayout();
@@ -69,15 +69,15 @@
             this.WeatherButton.UseVisualStyleBackColor = true;
             this.WeatherButton.Click += new System.EventHandler(this.WeatherButton_Click);
             // 
-            // POSTButton
+            // ChangeColButton
             // 
-            this.POSTButton.Location = new System.Drawing.Point(666, 510);
-            this.POSTButton.Name = "POSTButton";
-            this.POSTButton.Size = new System.Drawing.Size(99, 23);
-            this.POSTButton.TabIndex = 4;
-            this.POSTButton.Text = "Test Control";
-            this.POSTButton.UseVisualStyleBackColor = true;
-            this.POSTButton.Click += new System.EventHandler(this.POSTButton_Click);
+            this.ChangeColButton.Location = new System.Drawing.Point(628, 505);
+            this.ChangeColButton.Name = "ChangeColButton";
+            this.ChangeColButton.Size = new System.Drawing.Size(170, 23);
+            this.ChangeColButton.TabIndex = 4;
+            this.ChangeColButton.Text = "Change Eye Colour";
+            this.ChangeColButton.UseVisualStyleBackColor = true;
+            this.ChangeColButton.Click += new System.EventHandler(this.ColButton_Click);
             // 
             // UpdateButton
             // 
@@ -95,7 +95,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.ClientSize = new System.Drawing.Size(905, 594);
-            this.Controls.Add(this.POSTButton);
+            this.Controls.Add(this.ChangeColButton);
             this.Controls.Add(this.WeatherButton);
             this.Controls.Add(this.UpdateButton);
             this.Controls.Add(this.NewsButton);
@@ -115,7 +115,7 @@
         public System.Windows.Forms.PictureBox FaceBox;
         private System.Windows.Forms.Button NewsButton;
         private System.Windows.Forms.Button WeatherButton;
-        private System.Windows.Forms.Button POSTButton;
+        private System.Windows.Forms.Button ChangeColButton;
         private System.Windows.Forms.Button UpdateButton;
     }
 }

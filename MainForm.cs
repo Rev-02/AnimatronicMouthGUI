@@ -15,6 +15,7 @@ namespace AnimatronicMouthGUI
     {
         public VirtualFaceController VirtualFace;
         public RunLogic Run;
+        
 
         public MainForm()
         {
@@ -25,6 +26,7 @@ namespace AnimatronicMouthGUI
         {
             VirtualFace = new VirtualFaceController(FaceBox);
             Run = new RunLogic(VirtualFace);
+            Run.Setup();
         }
 
         private void FaceBox_Click(object sender, EventArgs e)
@@ -47,9 +49,10 @@ namespace AnimatronicMouthGUI
 
         }
 
-        private void POSTButton_Click(object sender, EventArgs e)
+        private void ColButton_Click(object sender, EventArgs e)
         {
-
+            int[] col = new int[] { 58, 96, 23 };
+            Run.ChangeColour(col);
         }
     }
 }

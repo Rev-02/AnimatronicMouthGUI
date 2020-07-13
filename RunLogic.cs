@@ -18,22 +18,24 @@ namespace AnimatronicMouthGUI
     public class RunLogic
     {
         private VirtualFaceController VirtualFace;
-        private static Random random; 
-        private static FaceController faceController;
-        private static Mouth m;
-        private static EyeController eyeController;
-        private static ReaderWriterLockSlim mouthlock = new ReaderWriterLockSlim();
-        private static ReaderWriterLockSlim eyelock = new ReaderWriterLockSlim();
-        private static int[][] Eyes = new int[2][];
-        private static string PortQueue = "0";
+        private  Random random; 
+        private  FaceController faceController;
+        private  Mouth m;
+        private EyeController eyeController;
+        private ReaderWriterLockSlim mouthlock = new ReaderWriterLockSlim();
+        private ReaderWriterLockSlim eyelock = new ReaderWriterLockSlim();
+        private int[][] Eyes = new int[2][];
+        private string PortQueue = "0";
+        private ManualResetEvent ResetEvent;
         
         public RunLogic(VirtualFaceController vface)
         {
             VirtualFace = vface;
         }
 
-        static void Setup()
+        public void Setup()
         {
+            ResetEvent = new ManualResetEvent(true);
             random = new Random();
             faceController = new FaceController("COM11", 115200);
             m = new Mouth("Microsoft David Desktop");
@@ -59,7 +61,7 @@ namespace AnimatronicMouthGUI
             
         }
 
-        static void MainLoop()
+        protected void MainLoop()
         {
             
             reader keyreader = new reader();
@@ -96,7 +98,7 @@ namespace AnimatronicMouthGUI
             }
         }
 
-        private static void speakNews(Mouth mouth, Interpreter interpreter, NewsApiTop newsAPI)
+        private void speakNews(Mouth mouth, Interpreter interpreter, NewsApiTop newsAPI)
         {
             TopNews data = newsAPI.GetTopNews("gb");
             mouth.speakMsg(string.Format("The top 5 news stories today are:"));
@@ -106,7 +108,7 @@ namespace AnimatronicMouthGUI
             }
         }
 
-        private static void speakWeather (Mouth mouth, Interpreter interpreter, OWMForecast oWMForecast, OWMCurrent oWM)
+        private void speakWeather (Mouth mouth, Interpreter interpreter, OWMForecast oWMForecast, OWMCurrent oWM)
         {
             
             ForecastData fc = oWMForecast.ForeCastWeahterData("cv5", "GB", "Coventry", 1);
@@ -126,12 +128,13 @@ namespace AnimatronicMouthGUI
             mouth.speakMsg(interpreter.ForecastSummary(fc));
         }
 
-        static void processEyes()
+        protected void processEyes()
         {
 
             
             while (true)
             {
+                ResetEvent.WaitOne(); // allows the thread to be paused by chnge colour func
                 eyeController.blink();
                 if(random.Next(5) == 2)
                 {
@@ -147,7 +150,7 @@ namespace AnimatronicMouthGUI
             }
         }
 
-        static void writeData()
+        protected void writeData()
         {
             while (true)
             {
@@ -156,8 +159,13 @@ namespace AnimatronicMouthGUI
                 try
                 {
                     
-                    faceController.writeFace(PortQueue, Eyes);
-                    
+                    bool physical = faceController.writeFace(PortQueue, Eyes);
+                    if (physical)
+                    {
+                        Console.WriteLine("write virtual");
+                        VirtualFace.writeFace(PortQueue, Eyes);
+
+                    }
                 }
                 finally
                 {
@@ -169,7 +177,14 @@ namespace AnimatronicMouthGUI
             }
         }
 
-        public static void mouthEventHandler(object sender, MouthPosChangedEventArgs e)
+        public void ChangeColour(int[] colour)
+        {
+            ResetEvent.Reset();
+            eyeController.setBoth(colour);
+            ResetEvent.Set();
+        }
+
+        public void mouthEventHandler(object sender, MouthPosChangedEventArgs e)
         {
             
             mouthlock.EnterWriteLock();
@@ -185,7 +200,7 @@ namespace AnimatronicMouthGUI
             
         }
 
-        public static void writeEyevals(object sender, EyesChangedEventArgs e)
+        public void writeEyevals(object sender, EyesChangedEventArgs e)
         {
             eyelock.EnterWriteLock();
             try

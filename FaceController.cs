@@ -30,7 +30,7 @@ namespace AnimatronicMouthGUI
             }
         }
 
-        public void writeFace(string mouthPos, int[][] colorArray)
+        public bool writeFace(string mouthPos, int[][] colorArray)
         {
             string writeData = "";
             writeData += mouthPos+",";
@@ -46,6 +46,11 @@ namespace AnimatronicMouthGUI
             {
                 lastWrite = writeData;
                 port.WriteLine(writeData);
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 

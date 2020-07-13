@@ -38,6 +38,8 @@ namespace AnimatronicMouthGUI
         PictureBox FaceBox;
         private int limit = 250;  //Sets  the highest point of the rectanlge image
         private int lowerPad = 5; //Sets the paddding around rectangle mouth
+        public delegate void refreshFace();
+
 
         public VirtualFaceController(PictureBox faceBox)
         {
@@ -59,7 +61,16 @@ namespace AnimatronicMouthGUI
                     ColorArray[i][a] = colorArray[i][a];
                 }
             }
-            FaceBox.Refresh();            
+            if (FaceBox.InvokeRequired)
+            {
+                var d = new refreshFace(FaceBox.Refresh);
+                FaceBox.Invoke(d);
+
+            }
+            else
+            {
+                FaceBox.Refresh();
+            }
 
         }
         private void drawFace(object sender, PaintEventArgs e)
