@@ -97,6 +97,14 @@ namespace AnimatronicMouthGUI
                 }
             }
         }
+        public void fullUpdate()
+        {
+            reader keyreader = new reader();
+            string[] keys = keyreader.ReadKeys();
+            Interpreter interpreter = new Interpreter();
+            NewsApiTop newsAPI = new NewsApiTop(keys[0]);
+            speakNews(m, interpreter, newsAPI);
+        }
 
         private void speakNews(Mouth mouth, Interpreter interpreter, NewsApiTop newsAPI)
         {
@@ -162,7 +170,6 @@ namespace AnimatronicMouthGUI
                     bool physical = faceController.writeFace(PortQueue, Eyes);
                     if (physical)
                     {
-                        Console.WriteLine("write virtual");
                         VirtualFace.writeFace(PortQueue, Eyes);
 
                     }
@@ -186,12 +193,13 @@ namespace AnimatronicMouthGUI
 
         public void mouthEventHandler(object sender, MouthPosChangedEventArgs e)
         {
-            
             mouthlock.EnterWriteLock();
+            Console.WriteLine("Write");
             try
             {
                 
                 PortQueue = e.Pos;
+                Console.WriteLine("Hi");
             }
             finally
             {

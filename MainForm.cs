@@ -15,7 +15,7 @@ namespace AnimatronicMouthGUI
     {
         public VirtualFaceController VirtualFace;
         public RunLogic Run;
-        
+        private Thread voiceThread = null;
 
         public MainForm()
         {
@@ -36,7 +36,9 @@ namespace AnimatronicMouthGUI
 
         private void UpdateButton_Click(object sender, EventArgs e)
         {
-            
+            voiceThread = new Thread(new ThreadStart(Run.fullUpdate)); //use thread so it is non-blocking of winform
+            voiceThread.Start();
+            Console.WriteLine("Update");
         }
 
         private void NewsButton_Click(object sender, EventArgs e)

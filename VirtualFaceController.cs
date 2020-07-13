@@ -61,7 +61,7 @@ namespace AnimatronicMouthGUI
                     ColorArray[i][a] = colorArray[i][a];
                 }
             }
-            if (FaceBox.InvokeRequired)
+            if (FaceBox.InvokeRequired) //requires delegate for refresh call because on different threads
             {
                 var d = new refreshFace(FaceBox.Refresh);
                 FaceBox.Invoke(d);
@@ -73,7 +73,7 @@ namespace AnimatronicMouthGUI
             }
 
         }
-        private void drawFace(object sender, PaintEventArgs e)
+        private void drawFace(object sender, PaintEventArgs e) //event handler for paint event on winform.
         {
             g = e.Graphics; //generate graphics area from picturebox
             Color LeftColour = new Color(); //left eyecolour
