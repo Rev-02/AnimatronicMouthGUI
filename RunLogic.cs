@@ -12,6 +12,7 @@ using System.Globalization;
 using System.Windows.Input;
 using System.ComponentModel.Design;
 using System.Diagnostics;
+using System.Drawing.Text;
 
 namespace AnimatronicMouthGUI
 {
@@ -27,6 +28,12 @@ namespace AnimatronicMouthGUI
         private int[][] Eyes = new int[2][];
         private string PortQueue = "0";
         private ManualResetEvent ResetEvent;
+        private reader reader;
+        private OWMForecast oWMForecast;
+        private NewsApiTop NewsAPI;
+        private OWMCurrent oWM;
+        private Interpreter interpreter;
+        private string[] keys;
         
         public RunLogic(VirtualFaceController vface)
         {
@@ -40,6 +47,14 @@ namespace AnimatronicMouthGUI
             faceController = new FaceController("COM11", 115200);
             m = new Mouth("Microsoft David Desktop");
             eyeController = new EyeController();
+            reader = new reader();
+            interpreter = new Interpreter();
+
+            keys = reader.ReadKeys();
+            oWM = new OWMCurrent(keys[1]);
+            oWMForecast = new OWMForecast(keys[1]);
+            NewsAPI = new NewsApiTop(keys[0]);
+
 
             ThreadStart eyethread = new ThreadStart(processEyes);
             ThreadStart portwriter = new ThreadStart(writeData);
@@ -61,49 +76,21 @@ namespace AnimatronicMouthGUI
             
         }
 
-        protected void MainLoop()
-        {
-            
-            reader keyreader = new reader();
-            string[] keys = keyreader.ReadKeys();
-            
-            NewsApiTop newsAPI = new NewsApiTop(keys[0]);
-            OWMForecast oWMForecast = new OWMForecast(keys[1]);
-            OWMCurrent oWM = new OWMCurrent(keys[1]);
-            Interpreter interpreter = new Interpreter();
-            
-            while (true)
-            {
-                string intext = "";
-                Console.Write("Press 1 for Full Update, 2 for news, 3 for weather \t");
-                intext = Console.ReadLine();
-                switch (intext)
-                {
-                    default:
-                        break;
-                    case "1":
-                        speakNews(m, interpreter, newsAPI);
-                        speakWeather(m, interpreter, oWMForecast, oWM);
-                        break;
-                    case "2":
-                        speakNews(m, interpreter, newsAPI);
-
-                        break;
-                    case "3":
-
-                        speakWeather(m, interpreter, oWMForecast, oWM);
-                        break;
-
-                }
-            }
-        }
+        
         public void fullUpdate()
         {
-            reader keyreader = new reader();
-            string[] keys = keyreader.ReadKeys();
-            Interpreter interpreter = new Interpreter();
-            NewsApiTop newsAPI = new NewsApiTop(keys[0]);
-            speakNews(m, interpreter, newsAPI);
+            WeatherUpdate();
+            NewsUpdate();
+        }
+
+        public void WeatherUpdate()
+        {
+            speakWeather(m, interpreter, oWMForecast, oWM);
+        }
+
+        public void NewsUpdate()
+        {
+            speakNews(m, interpreter, NewsAPI);
         }
 
         private void speakNews(Mouth mouth, Interpreter interpreter, NewsApiTop newsAPI)
@@ -230,5 +217,4 @@ namespace AnimatronicMouthGUI
 
     }
 }
-//TODO: Remove bad Comments
 //TODO: Comment Code properly

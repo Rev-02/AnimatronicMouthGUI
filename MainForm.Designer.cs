@@ -34,6 +34,7 @@
             this.WeatherButton = new System.Windows.Forms.Button();
             this.ChangeColButton = new System.Windows.Forms.Button();
             this.UpdateButton = new System.Windows.Forms.Button();
+            this.ColPicker = new System.Windows.Forms.ColorDialog();
             ((System.ComponentModel.ISupportInitialize)(this.FaceBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -89,6 +90,10 @@
             this.UpdateButton.UseVisualStyleBackColor = true;
             this.UpdateButton.Click += new System.EventHandler(this.UpdateButton_Click);
             // 
+            // ColPicker
+            // 
+            this.ColPicker.Color = System.Drawing.Color.Blue;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -117,6 +122,7 @@
         private System.Windows.Forms.Button WeatherButton;
         private System.Windows.Forms.Button ChangeColButton;
         private System.Windows.Forms.Button UpdateButton;
+        private System.Windows.Forms.ColorDialog ColPicker;
     }
 }
 

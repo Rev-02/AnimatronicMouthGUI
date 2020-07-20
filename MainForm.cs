@@ -38,23 +38,34 @@ namespace AnimatronicMouthGUI
         {
             voiceThread = new Thread(new ThreadStart(Run.fullUpdate)); //use thread so it is non-blocking of winform
             voiceThread.Start();
-            Console.WriteLine("Update");
         }
 
         private void NewsButton_Click(object sender, EventArgs e)
         {
-
+            voiceThread = new Thread(new ThreadStart(Run.NewsUpdate)); //use thread so it is non-blocking of winform
+            voiceThread.Start();
         }
 
         private void WeatherButton_Click(object sender, EventArgs e)
         {
-
+            voiceThread = new Thread(new ThreadStart(Run.WeatherUpdate)); //use thread so it is non-blocking of winform
+            voiceThread.Start();
         }
 
         private void ColButton_Click(object sender, EventArgs e)
         {
-            int[] col = new int[] { 58, 96, 23 };
-            Run.ChangeColour(col);
+            if (ColPicker.ShowDialog() == DialogResult.OK)
+            {
+                Color chosenCol = ColPicker.Color;
+                int[] col = new int[] { map(chosenCol.R,0,255,0,127), map(chosenCol.G, 0, 255, 0, 127), map(chosenCol.B, 0, 255, 0, 127) };
+                Run.ChangeColour(col);
+            }
+            
+        }
+
+        private int map(int variable, int inMin, int inMax, int outMin, int outMax)
+        {
+            return (variable - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
         }
     }
 }
