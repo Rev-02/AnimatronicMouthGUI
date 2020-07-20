@@ -194,12 +194,10 @@ namespace AnimatronicMouthGUI
         public void mouthEventHandler(object sender, MouthPosChangedEventArgs e)
         {
             mouthlock.EnterWriteLock();
-            Console.WriteLine("Write");
             try
             {
                 
                 PortQueue = e.Pos;
-                Console.WriteLine("Hi");
             }
             finally
             {
