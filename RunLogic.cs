@@ -109,7 +109,7 @@ namespace AnimatronicMouthGUI
             
             try
             {
-                ForecastData fc = oWMForecast.ForeCastWeahterData("cvk.jk5", "GB", "Covry", 2);
+                ForecastData fc = oWMForecast.ForeCastWeahterData("cvk.jk5", "GB", "Coventry", 2);
                 var returned = oWM.GetCurrent("cv5", "GB", "Coventry", 2);
                 mouth.speakMsg(string.Format(interpreter.CurrentSummary(returned)));
                 mouth.speakMsg(interpreter.ForecastSummary(fc));
