@@ -1,0 +1,5 @@
+Forecast Location
+Forecast mode (1 or 2)
+news location
+voice
+default eye color

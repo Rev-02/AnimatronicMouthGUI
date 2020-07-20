@@ -13,6 +13,7 @@ using System.Windows.Input;
 using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Drawing.Text;
+using System.Windows.Forms;
 
 namespace AnimatronicMouthGUI
 {
@@ -104,23 +105,23 @@ namespace AnimatronicMouthGUI
         }
 
         private void speakWeather (Mouth mouth, Interpreter interpreter, OWMForecast oWMForecast, OWMCurrent oWM)
-        {
-            
-            ForecastData fc = oWMForecast.ForeCastWeahterData("cv5", "GB", "Coventry", 1);
-            
+        {          
             
             try
             {
                 //var returned = oWM.GetCurrent("cv5", "GB", "Coventry", 1);
+                ForecastData fc = oWMForecast.ForeCastWeahterData("cvk.jk5", "GB", "Covry", 2);
                 var returned = oWM.GetCurrent("cv5", "GB", "Coventry", 2);
                 mouth.speakMsg(string.Format(interpreter.CurrentSummary(returned)));
+                mouth.speakMsg(interpreter.ForecastSummary(fc));
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                MessageBox.Show(e.Message, "Error",MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
-            mouth.speakMsg(interpreter.ForecastSummary(fc));
+         
         }
 
         protected void processEyes()
